@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/logs/logs",
     "home/home",
-    "pages/message/message",
     "pages/cart/cart",
     "pages/my/my",
     "pages/my/order/order",
@@ -17,7 +16,8 @@
     "pages/address_sel/address_sel",
     "pages/address_edit/address_edit",
     "pages/book_del/book_del",
-    "pages/order_submit/order_submit"
+    "pages/order_submit/order_submit",
+    "pages/123/123"
   ],
   "window": {
     "backgroundTextStyle": "light",
