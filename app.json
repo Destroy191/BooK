@@ -16,8 +16,7 @@
     "pages/address_sel/address_sel",
     "pages/address_edit/address_edit",
     "pages/book_del/book_del",
-    "pages/order_submit/order_submit",
-    "pages/123/123"
+    "pages/order_submit/order_submit"
   ],
   "window": {
     "backgroundTextStyle": "light",
