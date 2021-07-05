@@ -10,13 +10,13 @@
     "pages/person_info/person_info",
     "pages/my_book_eval/my_book_eval",
     "pages/book_detail/book_detail",
-    "pages/book_define/book_define",
     "pages/book_list/book_list",
     "pages/address_add/address_add",
     "pages/address_sel/address_sel",
     "pages/address_edit/address_edit",
     "pages/book_del/book_del",
-    "pages/order_submit/order_submit"
+    "pages/order_submit/order_submit",
+    "pages/order_history/order_history"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,4 +1,4 @@
-// pages/book_define/book_define.js
+// pages/order_history/order_history.js
 Page({
 
   /**
