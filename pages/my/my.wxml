@@ -34,14 +34,15 @@
       <text>已完成</text>
     </navigator>
   </view>
-  <navigator url="/pages/coupon/index" class='item'>
+  <view class='item'>
     <view class='left'>
-      个人信息管理
+      客服咨询
     </view>
     <view class='right'>
       <image src='/images/my_order.png'></image>
     </view>
-  </navigator>
+    <button class='kefu' open-type="contact"></button>
+  </view>
   <navigator url="/pages/address_edit/address_edit" class='item'>
     <view class='left'>
       地址管理

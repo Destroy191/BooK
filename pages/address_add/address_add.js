@@ -65,7 +65,7 @@ Page({
         id:that.data.id
       }).get({
         success:(res)=>{
-          console.log("请求成功",res)
+          console.log("数据请求成功",res)
           db.collection("address").doc(res.data[0]._id).update({
             data:{
               name: this.data.name,
@@ -97,6 +97,8 @@ Page({
           id: Number(options.id),
           addressIs:false
       })
+      console.log(this.data.number)
+      console.log(this.data.id)
     }
   }
 })

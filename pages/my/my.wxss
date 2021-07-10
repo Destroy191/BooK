@@ -26,6 +26,15 @@
    padding: 0 16px;
  }
  
+  .item button{
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  left: 0;
+  top: 2;
+  opacity: 0.01;
+ }
+ 
  .item .left{
    flex: 1 0 50%;
    font-size: 14px;
@@ -50,6 +59,8 @@
    padding-right: 10px;
  }
  
+
+
  .icon{
    border-bottom:1px solid #EDEDED; 
    display: flex;

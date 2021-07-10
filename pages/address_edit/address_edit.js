@@ -28,6 +28,7 @@ Page({
             default:false
           }
         })
+        that.onShow()
       }
     })
     db.collection("address").where({
@@ -38,7 +39,8 @@ Page({
           data:{
             default:true
           }
-        })
+        }),
+        that.onShow()
       }
     })
   },
@@ -55,6 +57,7 @@ Page({
         db.collection("address").doc(res.data[0]._id).remove({
           success: function(res) {
             console.log(res.data)
+            that.onShow()
           }
         })
       }

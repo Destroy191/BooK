@@ -14,7 +14,6 @@
     "pages/book_define/book_define",
     "pages/book_list/book_list",
     "pages/address_add/address_add",
-    "pages/address_sel/address_sel",
     "pages/address_edit/address_edit",
     "pages/book_del/book_del",
     "pages/order_submit/order_submit"
