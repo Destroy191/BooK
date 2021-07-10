@@ -1,4 +1,4 @@
-// pages/home/list/list.js
+// pages/message/message.js
 Page({
 
   /**

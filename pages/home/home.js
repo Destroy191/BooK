@@ -1,66 +1,166 @@
-// home/home.js
+//index.js
+//获取应用实例
+const app = getApp()
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    motto: 'Hello World',
+    userInfo: {},
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    imgUrls: null,
+    baseUrl:"https://api.bemfa.com/",
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    list:[],
+    page:1
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  //事件处理函数
+  bindViewTap: function() {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  addCart(data) {
+    let item = data.currentTarget.dataset.item
+    app.http('v1/order/addCart', {
+      id: item._id,
+      num: 1,
+      spec: ['asdasasd'],
+      title: item.title,
+      img: item.img,
+      price: item.price
+    }, "POST")
+      .then(res => {
+        console.log(res)
+        if (res.code == 200) {
+          wx.showToast({
+            title: '已加入购物车',
+            icon: 'success',
+            duration: 500
+          })
+        }
+      })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  imgsc:function(e){
+    wx.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths;
+        wx.uploadFile({
+          url: 'https://api.bemfa.com/v1/admin/uploadBanner',      //此处换上你的接口地址
+          filePath: tempFilePaths[0],
+          name: 'inputFile',
+          header: {
+            "Content-Type": "multipart/form-data",
+            'accept': 'application/json',
+          },
+          formData: {
+            href:'www.baidu.com',           //跳转地址
+            name:'大蛋糕',           //名称
+            is_hide:true,       //是否显示
+            effective:'2018-09-14,2019-09-14',       //有效期
+          },
+          success: function (res) {
+            var data = res.data;
+            console.log('data');
+          },
+          fail: function (res) {
+            console.log('fail');
+          },
+        })
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  lower:function(e){
+    console.log(e)
+    this.getList()
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  getList: function(){
+    app.http('v1/home/getHotList', { page: this.data.page})
+      .then(res => {
+        if (res.code == 200 && res.data.list.length > 0) {
+          this.data.page++
+          let list = this.data.list
+          for (let i = 0; i < res.data.list.length; i++) {
+            list.push(res.data.list[i])
+          }
+          this.setData({
+            list: list,
+            page: this.data.page
+          })
+          console.log(this.data)
+        }
+      })
   },
+  onLoad: function () {
+    let app = getApp()
+    this.getList()
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+    app.http('v1/home/bannerList')
+    .then(res=>{
+      this.setData({
+        imgUrls: res.data
+      })
+    })
 
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    } else if (this.data.canIUse){
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    }
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  changeIndicatorDots: function (e) {
+    this.setData({
+      indicatorDots: !this.data.indicatorDots
+    })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  changeAutoplay: function (e) {
+    this.setData({
+      autoplay: !this.data.autoplay
+    })
+  },
+  intervalChange: function (e) {
+    this.setData({
+      interval: e.detail.value
+    })
+  },
+  durationChange: function (e) {
+    this.setData({
+      duration: e.detail.value
+    })
+  },
+  getUserInfo: function(e) {
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
   }
 })
