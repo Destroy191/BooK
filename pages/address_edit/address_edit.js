@@ -6,7 +6,7 @@ Page({
    */
   data: {
     list:[],//存储获取的用户地址信息
-    openid:18074315,
+    openid:'',
     state:null
   },
 
@@ -66,7 +66,7 @@ Page({
 
   onLoad: function (options) {
     this.setData({
-      openid:18074315
+      openid:app.globalData.openid,
     })
   },
 
@@ -78,7 +78,7 @@ Page({
       let that = this
       wx.cloud.init()
       wx.cloud.database().collection("address").where({
-        openid:18074315
+        _openid:that.data.openid
       }).get({
         success(res) {
           console.log("请求成功", res)
