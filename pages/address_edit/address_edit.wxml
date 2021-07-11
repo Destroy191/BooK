@@ -13,7 +13,7 @@
       <navigator  hover-class="none" url="/pages/address_add/address_add?city={{item.city[0]}},{{item.city[1]}},{{item.city[2]}}&mobile={{item.mobile}}&name={{item.name}}&detailed={{item.detailed}}&id={{item.id}}&number={{list[list.length-1].id}}"  class='edit'>
         <image src='/images/edit.png'></image>
       </navigator>
-      <view class='choice' wx:if="{{item.default == false}}" bindtap='defaultFun' data-item="{{item}}">
+      <view class='choice' wx:if="{{id != item.id}}" bindtap='defaultFun' data-item="{{item}}">
         <image src='/images/choice_n.png'></image>
       </view>
        <view class='choice' wx:else>

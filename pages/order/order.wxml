@@ -15,8 +15,9 @@
     </view>
   </view>
   <scroll-view scroll-y class='list'>
-      <view class='item' wx:if="{{!isEdit}}" wx:for="{{list}}">
+    <view class='item' wx:for="{{list}}">
       <navigator class='content' hover-class="none" url="/pages/orderDetails/index?id={{item._id}}">
+        <!--点击时跳转至商品详情页面，页面链接填写至url-->
         <image src='{{item.goods[0].img}}'></image>
         <view class='text'>
           <view class='title'>共{{item.goods.length}}件商品</view>
@@ -24,6 +25,7 @@
           <view class='price'>
             <text>¥{{item.totalPrice}}</text>
           </view>
+          <!--显示货物图片，货物数量，商品总价，应该和购物车类似-->
         </view>
       </navigator>
     </view>

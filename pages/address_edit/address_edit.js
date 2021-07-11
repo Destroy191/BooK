@@ -7,6 +7,7 @@ Page({
   data: {
     list:[],//存储获取的用户地址信息
     openid:'',
+    id:'',
     state:null
   },
 
@@ -28,7 +29,6 @@ Page({
             default:false
           }
         })
-        that.onShow()
       }
     })
     db.collection("address").where({
@@ -39,9 +39,11 @@ Page({
           data:{
             default:true
           }
-        }),
-        that.onShow()
+        })
       }
+    })
+    that.setData({
+      id : data.currentTarget.dataset.item.id
     })
   },
 
@@ -85,6 +87,14 @@ Page({
           that.setData({
             list: res.data
           })
+          console.log("赋值",that.data.list)
+          for (var index in that.data.list){
+            if(that.data.list[index].default == true){
+              that.setData({
+                id : that.data.list[index].id
+              })
+            }
+          }
         },
         fail(res){
           console.log("请求失败", res)
