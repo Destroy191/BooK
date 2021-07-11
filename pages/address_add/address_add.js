@@ -40,45 +40,49 @@ Page({
   submitFun: function () {
     if (this.data.addressIs){
       //添加一条信息地址信息至数据库
-      wx.cloud.init()
-      wx.cloud.database().collection('address').add({
-        data: {
-          name: this.data.name,
-          mobile: this.data.mobile,
-          detailed: this.data.detailed,
-          city: this.data.region,
-          default:false,
-          openid:18074315,
-          id:this.data.number
-        }
-      })
-      wx.navigateBack({
-        delta: 1
-      })
+      if(this.check()){
+        wx.cloud.init()
+        wx.cloud.database().collection('address').add({
+          data: {
+            name: this.data.name,
+            mobile: this.data.mobile,
+            detailed: this.data.detailed,
+            city: this.data.region,
+            default:false,
+            openid:18074315,
+            id:this.data.number
+          }
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+      }
     }else{
       //修改当前数据库的信息
-      let that = this
-      wx.cloud.init()
-      var db = wx.cloud.database()
-      var  _ = db.command
-      db.collection("address").where({
-        id:that.data.id
-      }).get({
-        success:(res)=>{
-          console.log("数据请求成功",res)
-          db.collection("address").doc(res.data[0]._id).update({
-            data:{
-              name: this.data.name,
-              mobile: this.data.mobile,
-              detailed: this.data.detailed,
-              city: this.data.region
-            }
-          })
-          wx.navigateBack({
-            delta: 1
-          })
-        }
-      })
+      if(this.check()){
+        let that = this
+        wx.cloud.init()
+        var db = wx.cloud.database()
+        var  _ = db.command
+        db.collection("address").where({
+          id:that.data.id
+        }).get({
+          success:(res)=>{
+            console.log("数据请求成功",res)
+            db.collection("address").doc(res.data[0]._id).update({
+              data:{
+                name: this.data.name,
+                mobile: this.data.mobile,
+                detailed: this.data.detailed,
+                city: this.data.region
+              }
+            })
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
+      }
     }
   },
   /**
@@ -100,5 +104,42 @@ Page({
       console.log(this.data.number)
       console.log(this.data.id)
     }
+  },
+  check :function() {
+    //此函数用于检测输入的地址信息是否合法，目前可检测手机号的合法性
+    let that = this;
+    let phone = that.data.mobile;
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+    if(phone.length == 0){
+      wx.showToast({
+         title: '输入的手机号为空',
+         icon: 'none',
+          duration: 1500
+      });
+      return false;
+    }else if (phone.length != 11) {
+        wx.showToast({
+          title: '手机号长度有误！',
+          icon: 'none',
+          duration: 1500
+       });
+    return false;
+    } else if (!myreg.test(phone)) {
+       wx.showToast({
+           title: '手机号有误！',
+            icon: 'none',
+            duration: 1500
+        });
+        return false;
+    }
+    if (!(/^[\u4E00-\u9FA5A-Za-z]+$/.test(that.data.name))) {
+      wx.showToast({
+      title: '姓名有误',
+      icon: 'none',
+      duration: 1500
+      });
+      return false;
+    }
+    return true;
   }
 })
