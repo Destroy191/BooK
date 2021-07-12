@@ -109,6 +109,6 @@
   </view>
   <!-- 结算 -->
   <view class="order_pay_wrap">
-    结算
+    结算(2)
   </view>
 </view>
