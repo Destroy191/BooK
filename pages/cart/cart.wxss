@@ -48,10 +48,7 @@ page{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250rpx;
-}
-.cart_main .cart_item .cart_img_wrap .image{
-  width: 80%;
+  width: 100rpx;
 }
 .cart_main .cart_item .cart_info_wrap{
   flex: 4;
