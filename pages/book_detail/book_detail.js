@@ -1,4 +1,5 @@
 // pages/book_detail/book_detail.js
+const app = getApp()
 Page({
 
   /**
@@ -6,6 +7,11 @@ Page({
    */
   data: {
     id: "1",
+    openid: "0",
+    name: "0",
+    picture: "0",
+    price: 0,
+    number: 0,
   },
 
   getList(){
@@ -18,6 +24,9 @@ Page({
   onLoad: function (options) {
     this.setData({
       id: options.id,
+      name: options.name,
+      picture: options.picture,
+      price: options.price
     })
     this.getList()
   },
@@ -30,10 +39,10 @@ Page({
     db.collection("book").where({
      _id: this.data.id
     }).get({
-      success(res) {
-        console.log("请求成功", res)
-        that.setData({
-          list: res.data
+      success: res => {
+        console.log(res.data)   
+        this.setData({
+          list: res.data,
         })
       },
       fail(res){
@@ -42,11 +51,82 @@ Page({
     })
   },
 
-  addBook: function () {
-
+  addBook: function (data) {
+    let that = this
+    wx.cloud.init()
+    const db = wx.cloud.database({env: 'cloud1-0guxl71la2985ced'})
+    const _ = db.command
+    db.collection("cart").where(_.and([
+    {
+      book_id: that.data.id
+    },
+    {
+      _openid:app.globalData.openid
+    }])).get({
+       success(res) {
+         console.log("请求成功", res)
+         if(res.data.length == 0){
+          wx.cloud.init()
+          wx.cloud.database().collection('cart').add({
+            data: {
+              book_id: that.data.id,
+              book_name: that.data.name,
+              book_picture: that.data.picture,
+              book_price: that.data.price,
+              checked: false,
+              number: 1
+            }
+          })
+         }else{
+          console.log("进入else")
+          that.setData({
+            number:res.data[0].number + 1
+          })
+          console.log("通过setdata",res.data[0].number)
+          wx.cloud.init()
+          db.collection("cart").doc(res.data[0]._id).update({
+            data:{
+              number:that.data.number
+            }
+          })
+         }
+         wx.showToast({
+          title: '加入购物车成功',
+          icon: 'success',
+          duration: 1000//持续的时间
+        })
+       },
+       fail(res){
+         console.log("请求失败", res)
+       }
+     })
   },
 
-  buyBook: function () {
-    
+  buyBook: function (data){
+    let cart = [{_id: "0", _openid: app.globalData.openid, book_id: this.data.id, book_name: this.data.name, book_picture: this.data.picture, book_price: this.data.price, checked: false, number: 1}];
+    let totalNum = this.data.number;
+    let totalPrice = this.data.price;
+    console.log(cart)
+    wx.navigateTo({
+      url: '/pages/order_submit/order_submit?cart=' + cart + '&totalNum=' + totalNum + '&totalPrice=' + totalPrice,
+      success: () => {
+        console.log('传值成功')
+      },
+      error: () => {
+        console.log('传值失败')
+      }
+    })
+  },
+
+  toCart: function(e){
+    wx.navigateTo({
+      url: '/pages/cart/cart',
+      success: () => {
+        console.log('跳转成功')
+      },
+      error: () => {
+        console.log('跳转成功')
+      }
+    })
   }
 })

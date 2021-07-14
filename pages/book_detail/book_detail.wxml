@@ -11,10 +11,10 @@
     </view>
   </view>
 </view>
-<navigator url="/pages/cart/cart" hover-class="none" >
+<view bindtap="toCart">
   <image class="cart" src='/images/shopping_select.png' mode="aspectFit" style="width=10%;height=10%"></image>
   <text class="text">查看购物车</text>
-</navigator>
+</view>
 <!-- 底部工具栏 -->
 <view class="footer_tool">
   <!-- 加入购物车 -->
