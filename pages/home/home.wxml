@@ -1,53 +1,67 @@
 <!--home/home.wxml-->
 <!--index.wxml-->
-<scroll-view class="container" scroll-y  bindscrolltolower="lower">
- <swiper 
+<view>
+     <view>
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+            <!-- 搜索框 -->
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" value="{{name}}" class="weui-search-bar__input" bindinput="SearchInput" placeholder="请输入搜索内容"/>
+                </view>
+            </view>
+            <!-- 搜索按钮,调用搜索查询方法 -->
+            <view class="weui-search-bar__cancel-btn" bindtap='Searchfun'>搜索</view>
+        </view>
+    </view>
+</view>
+<view class='imagesize'>
+  <swiper 
     indicator-dots="{{indicatorDots}}"
     autoplay="{{autoplay}}" 
     interval="{{interval}}" 
     duration="{{duration}}"
     >
-      <block wx:for="{{imgUrls}}">
+      <block wx:for="{{list4}}">
         <swiper-item>
-          <image src='{{baseUrl+item.img_url}}' style='width:100%;height:220px;' />
+          <navigator url="/pages/book_detail/book_detail?id={{item._id}}" hover-class="none" >
+            <image src='{{item.picture}}' class="slide-image" style='width:100%;height:220px;' />
+          </navigator>
         </swiper-item>
       </block>
   </swiper>
-  <view class='icon'>
-    <navigator hover-class="none" url="/pages/list/index?title=生日&id=5b8e37e34b640a63b33272dc">
-      <image src='/images/birthday.png' mode="aspectFit"></image>
-      <text>生日</text>
+</view>
+<view class='icon'>
+    <navigator url="/pages/book_list/book_list?type=教育" hover-class="none" >
+      <image src='/images/education.jpg' mode="aspectFit"></image>
+      <text>教育</text>
     </navigator>
-    <navigator hover-class="none" url="/pages/list/index?title=节日&id=5b8f45f2afb7c17788e11994">
-      <image src='/images/festival.png' mode="aspectFit"></image>
-      <text>节日</text>
+    <navigator url="/pages/book_list/book_list?type=文学" hover-class="none" >
+      <image src='/images/literature.jpg' mode="aspectFit"></image>
+      <text>文学</text>
     </navigator>
-    <navigator hover-class="none" url="/pages/list/index?title=婚礼&id=5b8f4603afb7c17788e11996">
-      <image src='/images/wedding.png' mode="aspectFit"></image>
-      <text>婚礼</text>
+    <navigator url="/pages/book_list/book_list?type=少儿" hover-class="none" >
+      <image src='/images/child.jpg' mode="aspectFit"></image>
+      <text>少儿</text>
     </navigator>
-    <navigator hover-class="none" url="/pages/list/index?title=party&id=5b8f4612afb7c17788e11998">
-      <image src='/images/party.png' mode="aspectFit"></image>
-      <text>party</text>
+    <navigator url="/pages/book_list/book_list?type=人文" hover-class="none" >
+      <image src='/images/encouragement.jpg' mode="aspectFit"></image>
+      <text>人文</text>
     </navigator>
-  </view>
-  <view class='title'>
-    <text class='cn'>猜你喜欢</text>
-    <text class='en'>Lovely</text>
+    <navigator url="/pages/book_list/book_list?type=经管" hover-class="none" >
+      <image src='/images/society.jpg' mode="aspectFit"></image>
+      <text>经管</text>
+    </navigator>
   </view>
   <view class='list'>
-    <view class='item' wx:for="{{list}}">
-      <navigator hover-class="none" url="/pages/details/index?id={{item._id}}">
-        <image class='product' src='{{item.img}}'></image>
-        <text class='text'>{{item.title}}.</text>
-      </navigator>
-      <view class='price'>
-        <text>￥{{item.price}}</text>
-        <view  bindtap='addCart' data-item="{{item}}">
-        <image style='width:20px;height:20px;' src='/images/Shopping.png'></image>
-        </view>
+    <view class='home' wx:for="{{list}}" >
+      <view>
+        <navigator url="/pages/book_detail/book_detail?id={{item._id}}&name={{item.name}}&picture={{item.picture}}&price={{item.price}}" hover-class="none" >
+          <image src="{{item.picture}}" mode="aspectFit"></image>
+          <view><text>{{item.name}}</text></view>
+          <view class="show">¥{{item.price}}</view>
+        </navigator>
       </view>
     </view>
   </view>
-  <!-- <button bindtap='imgsc'> 上传</button> -->
-</scroll-view>
+<!-- <button bindtap='imgsc'> 上传</button> -->

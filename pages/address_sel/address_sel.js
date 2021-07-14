@@ -78,6 +78,14 @@ Page({
       content: '是否删除该地址',
       success :(res)=>{
         if (res.confirm) {
+          const del_id = data.currentTarget.dataset.item.id;
+          if(del_id == this.data.id){
+            wx.showToast({
+              title: '无法删除默认地址',
+              icon: 'none'
+            })
+            return;
+          }
           let that = this
           wx.cloud.init()
           var db = wx.cloud.database()

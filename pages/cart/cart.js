@@ -10,7 +10,7 @@ Page({
     openid:null,
     address:[],
     cart: [],
-    allChecked: true,
+    allChecked: false,
     totalPrice: 0,
     totalNum: 0
   },
@@ -21,9 +21,32 @@ Page({
   },
   onShow: function () {
     //接收来自address_sel页面的地址数据
-    this.getAddress();
-    // 获取数据库中cart的数据,并计算底部条
     let that = this
+    wx.cloud.init()
+    wx.cloud.database().collection("address").where({
+      _openid: that.data.openid,
+      default: true
+    }).get({
+      success(res) {
+        console.log("请求地址成功", res)
+        if(res.data[0] != null){
+          console.log("找到了地址");
+          that.setData({
+            address: {region: res.data[0].city, detailed: res.data[0].detailed, mobile: res.data[0].mobile, name: res.data[0].name, address_id: res.data[0].id}
+          })
+        }
+        else{
+          console.log("没找到地址");
+          that.setData({
+            address: null
+          })
+        }
+      },
+      fail(res){
+        console.log("请求地址失败", res)
+      }
+    })
+    // 获取数据库中cart的数据,并计算底部条
     wx.cloud.init()
     wx.cloud.database().collection("cart").where({
       _openid:that.data.openid
@@ -34,7 +57,7 @@ Page({
           cart: res.data
         })
         // 确定allChecked
-        let allChecked = true;
+        let allChecked = (that.data.cart.length != 0) ? that.data.cart.every(v=>v.checked) : false;
         console.log(1);
         // 确定total
         let totalPrice = 0; 
@@ -62,26 +85,7 @@ Page({
         console.log("请求购物车失败", res)
       }
     })
-  },
-  // 获取地址功能
-  async getAddress(){
-    let that = this
-    wx.cloud.init()
-    wx.cloud.database().collection("address").where({
-      _openid: that.data.openid,
-      default: true
-    }).get({
-      success(res) {
-        console.log("请求地址成功", res)
-        that.setData({
-          address: {region: res.data[0].city, detailed: res.data[0].detailed, mobile: res.data[0].mobile, name: res.data[0].name, address_id: res.data[0].id}
-        })
-        console.log("请求地址成功", that.data.address);
-      },
-      fail(res){
-        console.log("请求地址失败", res)
-      }
-    })
+    
   },
   // 选中商品功能
   handleItemChange(e){
@@ -94,7 +98,7 @@ Page({
       cart
     })
     // 确定allChecked
-    const allChecked = this.data.cart.every(v=>v.checked);
+    const allChecked = (this.data.cart.length != 0) ? this.data.cart.every(v=>v.checked) : false;
     console.log(1);
     // 确定total
     let totalPrice = 0; 
@@ -139,7 +143,7 @@ Page({
       cart
     })
     // 确定allChecked
-    allChecked = this.data.cart.every(v=>v.checked);
+    allChecked = (this.data.cart.length != 0) ? this.data.cart.every(v=>v.checked) : false;
     console.log(1);
     // 确定total
     let totalPrice = 0; 
@@ -171,7 +175,7 @@ Page({
     })
   },
   // 改变商品个数
-  async handleItemNumEdit(e){
+  handleItemNumEdit(e){
     const {operation, id} = e.currentTarget.dataset;
     console.log(operation,id);
     let {cart} = this.data;
@@ -188,7 +192,7 @@ Page({
               cart
             })
             // 确定allChecked
-            const allChecked = this.data.cart.every(v=>v.checked);
+            const allChecked = (this.data.cart.length != 0) ? this.data.cart.every(v=>v.checked) : false;
             console.log(1);
             // 确定total
             let totalPrice = 0; 
@@ -229,7 +233,7 @@ Page({
               cart
             })
             // 确定allChecked
-            const allChecked = this.data.cart.every(v=>v.checked);
+            const allChecked = (this.data.cart.length != 0) ? this.data.cart.every(v=>v.checked) : false;
             console.log(1);
             // 确定total
             let totalPrice = 0; 
@@ -311,9 +315,9 @@ Page({
     }
   },
   // 结算功能
-  async handlePay(e){
+  handlePay(e){
     const {address, totalNum} = this.data;
-    if(!address.name){
+    if(address == null){
       wx.showToast({
         title: '请选择地址',
         icon: 'none'
@@ -346,6 +350,63 @@ Page({
   handleChooseAddress(){
     wx.navigateTo({
       url: '/pages/address_sel/address_sel',
+    })
+  },
+  // 直接删除图书
+  book_delete(e){
+    const id = e.currentTarget.dataset.id;
+    console.log(id);
+    let {cart} = this.data;
+    const index = cart.findIndex(v=>v._id===id);
+    wx.showModal({
+      title: '删除商品',
+      content: '是否删除该商品',
+      success :(res)=>{
+        if (res.confirm) {
+          cart.splice(index,1);
+          this.setData({
+            cart
+          })
+          // 确定allChecked
+          const allChecked = (this.data.cart.length != 0) ? this.data.cart.every(v=>v.checked) : false;
+          console.log(1);
+          // 确定total
+          let totalPrice = 0; 
+          let totalNum = 0;
+          console.log(2);
+          for(let i = 0; i < this.data.cart.length; i++){
+            if(this.data.cart[i].checked){
+              console.log(3);
+              totalPrice+=this.data.cart[i].number*this.data.cart[i].book_price;
+              totalNum+=this.data.cart[i].number;
+            }
+          }
+          console.log(4);
+          this.setData({
+            allChecked,
+            totalPrice,
+            totalNum
+          })
+          let that = this
+          wx.cloud.init()
+          var db = wx.cloud.database()
+          var  _ = db.command
+          db.collection("cart").where({
+            _id: id
+          }).get({
+            success:(res)=>{
+              console.log("数据删除成功",res)
+              db.collection("cart").doc(res.data[0]._id).remove({
+                success: function(res) {
+                  that.onShow()
+                }
+              })
+            }
+          })
+        } else if (res.cancel) {
+          
+        }
+      }
     })
   }
 })

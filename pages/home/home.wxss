@@ -37,7 +37,7 @@ swiper{
   border-top:2px solid #EDEDED; 
   border-bottom:2px solid #EDEDED; 
   display: flex;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 .icon image{
   display: block;
@@ -52,10 +52,10 @@ swiper{
   width: 100%;
   font-size: 14px;
   color: #333;
-  padding-top: 10px;
+  padding-top: 14px;
 }
 .icon navigator{
-  flex: 1 0 25%;
+  flex: 1 0 20%;
 }
 
 .list{
@@ -104,4 +104,83 @@ swiper{
   width: 20px;
   height: 20px;
   padding-top: 2px;
+}
+
+.imagesize{
+  display:flex;                    
+  justify-content: center;         
+ }
+
+ .weui-search-bar {
+  position: relative;
+  padding: 8px 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  background-color: #EFEFF4;
+  border-top: 1rpx solid #D7D6DC;
+  border-bottom: 1rpx solid #D7D6DC;
+}
+.weui-icon-search_in-box {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+}
+.weui-search-bar__form {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+          flex: auto;
+  border-radius: 5px;
+  background: #FFFFFF;
+  border: 1rpx solid #E6E6EA;
+}
+.weui-search-bar__box {
+  position: relative;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.weui-search-bar__input {
+  height: 28px;
+  line-height: 28px;
+  font-size: 14px;
+}
+.weui-search-bar__cancel-btn {
+  margin-left: 10px;
+  line-height: 28px;
+  color: #f38c06;
+  white-space: nowrap;
+}
+
+.home{
+  border-top:2px solid #EDEDED; 
+  border-bottom:2px solid #EDEDED; 
+  border-left:2px solid #EDEDED;
+  border-right:2px solid #EDEDED;
+  display: flex;
+  padding: 10px 0;
+  flex:40%
+}
+.home image{
+  display: flex;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  padding-top: 10px;
+  margin-left:20px;
+}
+.home text{
+  width: 100%;
+  font-size: 14px;
+  color: #333;
+  padding-top: 10px;
+  margin-left:0px;
+}
+
+.show{
+  color:rgb(255,0,0)
 }

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/my/my",
     "pages/home/home",
+    "pages/my/my",
     "pages/index/index",
     "pages/logs/logs",
     "pages/message/message",
@@ -16,8 +16,8 @@
     "pages/address_add/address_add",
     "pages/address_edit/address_edit",
     "pages/book_del/book_del",
-    "pages/order_submit/order_submit",
-    "pages/address_sel/address_sel"
+    "pages/order_submit/order_submit"
+
   ],
   "window": {
     "backgroundTextStyle": "light",

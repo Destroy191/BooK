@@ -89,7 +89,13 @@ page{
   justify-content: center;
   align-items: center;
 }
-
+.cart_main .cart_item .cart_info_wrap .goods_price_wrap .cart_num_tool .del_goods{
+  width: 50rpx;
+  height: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .footer_tool{
   position: fixed;
   bottom: 0;

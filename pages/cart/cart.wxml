@@ -1,11 +1,11 @@
 <!-- 收货地址 -->
 <view class="receive_address_row"> 
   <!-- 当收货地址不存在时显示 -->
-  <!-- <view class="address_select_btn" wx:if="{{!isSelectAddress}}">
+  <view class="address_select_btn" wx:if="{{address == null}}">
     <button class="button" bindtap="handleChooseAddress" >获取收货地址</button>
-  </view> -->
+  </view>
   <!-- 当收货地址存在时显示 -->
-  <view class="address_info_btn">
+  <view class="address_info_btn" wx:else>
     <button class="button" bindtap="handleChooseAddress" >
       {{address.region[0]}} {{address.region[1]}} {{address.region[2]}} {{address.detailed}}
       {{address.mobile}} {{address.name}} 收
@@ -39,6 +39,9 @@
               <view bindtap="handleItemNumEdit" data-id="{{item._id}}" data-operation="{{1}}" class="num_edit">+</view>
               <view class="goods_num">{{item.number}}</view>
               <view bindtap="handleItemNumEdit" data-id="{{item._id}}" data-operation="{{-1}}" class="num_edit">-</view>
+              <view class='del_goods' bindtap="book_delete" data-id="{{item._id}}">
+                <image mode="widthFix" src="/images/del.png"></image>
+              </view>
             </view>
           </view>
         </view>
