@@ -1,0 +1,28 @@
+<!--pages/book_detail/book_detail.wxml-->
+<view class='home'>
+  <view wx:for="{{list}}" >
+    <view>
+      <navigator hover-class="none" >
+        <image src="{{item.picture}}" mode="aspectFit"></image>
+        <view><text>{{item.name}}</text></view>
+        <view class="show">¥{{item.price}}</view>
+        <image src="{{item.detail}}" mode="aspectFit"></image>
+      </navigator>
+    </view>
+  </view>
+</view>
+<navigator url="/pages/cart/cart" hover-class="none" >
+  <image class="cart" src='/images/shopping_select.png' mode="aspectFit" style="width=10%;height=10%"></image>
+  <text class="text">查看购物车</text>
+</navigator>
+<!-- 底部工具栏 -->
+<view class="footer_tool">
+  <!-- 加入购物车 -->
+  <view class="order_pay_wrap" bindtap="addBook">
+    加入购物车
+  </view>
+  <!-- 结算 -->
+  <view class="order_pay_wrap" bindtap="buyBook">
+    购买
+  </view>
+</view>
