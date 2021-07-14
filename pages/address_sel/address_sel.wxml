@@ -22,8 +22,14 @@
     </view>
   </view>
 </scroll-view>
-<view class='btn' bindtap="submitAddressChoice">
-确定收货地址
+<view class="choice_btn">
+  <view class='add_btn' bindtap="addAddressChoice">
+    新增收货地址
+  </view>
+  <view class='submit_btn' bindtap="submitAddressChoice">
+    确定收货地址
+  </view>
 </view>
+
 </view>
 

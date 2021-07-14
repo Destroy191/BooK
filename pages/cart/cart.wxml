@@ -1,11 +1,11 @@
 <!-- 收货地址 -->
 <view class="receive_address_row"> 
   <!-- 当收货地址不存在时显示 -->
-  <view class="address_select_btn" wx:if="{{!isSelectAddress}}">
+  <!-- <view class="address_select_btn" wx:if="{{!isSelectAddress}}">
     <button class="button" bindtap="handleChooseAddress" >获取收货地址</button>
-  </view>
+  </view> -->
   <!-- 当收货地址存在时显示 -->
-  <view class="address_info_btn" wx:else>
+  <view class="address_info_btn">
     <button class="button" bindtap="handleChooseAddress" >
       {{address.region[0]}} {{address.region[1]}} {{address.region[2]}} {{address.detailed}}
       {{address.mobile}} {{address.name}} 收
@@ -27,9 +27,9 @@
           </checkbox-group>
         </view>
         <!-- 商品图片 -->
-        <navigator class="cart_img_wrap">
+        <view class="cart_img_wrap">
           <image mode="aspectFit" src="{{item.book_picture}}"></image>
-        </navigator>
+        </view>
         <!-- 商品信息 -->
         <view class="cart_info_wrap">
           <view class="goods_name">{{item.book_name}}</view>

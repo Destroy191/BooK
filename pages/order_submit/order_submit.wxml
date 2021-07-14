@@ -12,7 +12,7 @@
 <view class="cart_content">
   <view class="cart_title">购物车</view>
   <view class="cart_main">
-      <view class="cart_item" wx:for="{{cart}}" wx:key="_id">
+      <view class="cart_item" wx:for="{{cart}}" wx:key="book_name">
       <!-- 商品图片 -->
       <view class="cart_img_wrap">
       <image mode="widthFix" src="{{item.book_picture}}" ></image>
@@ -34,9 +34,9 @@
 <!-- 底部工具栏 -->
 <view class="footer_tool">
   <!-- 取消订单 -->
-  <view class="order_cancel_wrap" bindtap="">
-    取消
-  </view>
+  <!-- <view class="order_cancel_wrap" bindtap="handleCancel">
+    放弃
+  </view> -->
   <!-- 总价格 -->
   <view class="total_price_wrap">
     <view class="total_price">
@@ -45,7 +45,7 @@
     <view>包含运费</view>
   </view>
   <!-- 结算订单 -->
-  <view class="order_pay_wrap" bindtap="">
-    支付({{totalNum}})
+  <view class="order_pay_wrap" bindtap="handlePay">
+    支付
   </view>
 </view>

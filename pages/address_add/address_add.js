@@ -13,7 +13,8 @@ Page({
     detailed:'',
     addressIs:true,
     number:0,
-    id:0
+    id:0,
+    openid:''
   },
   bindRegionChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -51,10 +52,12 @@ Page({
             default:false,
             openid:18074315,
             id:this.data.number
+          },
+          success:(res)=>{
+            wx.navigateBack({
+              delta: 1
+            })
           }
-        })
-        wx.navigateBack({
-          delta: 1
         })
       }
     }else{
@@ -65,6 +68,7 @@ Page({
         var db = wx.cloud.database()
         var  _ = db.command
         db.collection("address").where({
+          _openid:that.data.openid,
           id:that.data.id
         }).get({
           success:(res)=>{
@@ -75,22 +79,22 @@ Page({
                 mobile: this.data.mobile,
                 detailed: this.data.detailed,
                 city: this.data.region
+              },
+              success:(res)=>{
+                wx.navigateBack({
+                  delta: 1
+                })
               }
-            })
-            wx.navigateBack({
-              delta: 1
             })
           }
         })
       }
     }
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     this.setData({
-      number: Number(options.number)+1
+      number: Number(options.number)+1,
+      openid: app.globalData.openid
     })
     if (options.id){
       this.setData({

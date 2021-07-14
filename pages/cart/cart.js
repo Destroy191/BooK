@@ -8,7 +8,6 @@ const app = getApp()
 Page({
   data: {
     openid:null,
-    isSelectAddress: false,
     address:[],
     cart: [],
     allChecked: true,
@@ -30,7 +29,7 @@ Page({
       _openid:that.data.openid
     }).get({
       success(res) {
-        console.log("请求成功", res)
+        console.log("请求购物车成功", res)
         that.setData({
           cart: res.data
         })
@@ -60,27 +59,29 @@ Page({
         })
       },
       fail(res){
-        console.log("请求失败", res)
+        console.log("请求购物车失败", res)
       }
     })
   },
   // 获取地址功能
   async getAddress(){
-    var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1]; //当前页面
-    this.setData({
-      address: currPage.__data__.address,
+    let that = this
+    wx.cloud.init()
+    wx.cloud.database().collection("address").where({
+      _openid: that.data.openid,
+      default: true
+    }).get({
+      success(res) {
+        console.log("请求地址成功", res)
+        that.setData({
+          address: {region: res.data[0].city, detailed: res.data[0].detailed, mobile: res.data[0].mobile, name: res.data[0].name, address_id: res.data[0].id}
+        })
+        console.log("请求地址成功", that.data.address);
+      },
+      fail(res){
+        console.log("请求地址失败", res)
+      }
     })
-    if(this.data.address.name){
-      this.setData({
-        isSelectAddress: true
-      })
-    }
-    else{
-      this.setData({
-        isSelectAddress: false
-      })
-    }
   },
   // 选中商品功能
   handleItemChange(e){
@@ -178,7 +179,7 @@ Page({
     cart[index].number += Number(operation);
     if(cart[index].number === 0){
       wx.showModal({
-        title: '提示',
+        title: '删除商品',
         content: '是否删除该商品',
         success :(res)=>{
           if (res.confirm) {
@@ -326,12 +327,19 @@ Page({
       })
       return;
     }
-    var n_address = JSON.stringify(this.data.address);
-    var cart = JSON.stringify(this.data.cart);
+    let sel_cart = [];
+    let {cart} = this.data;
+    for(let i = 0; i < cart.length; i++){
+      if(cart[i].checked){
+        sel_cart.push(cart[i]);
+      }
+    }
+    console.log(sel_cart);
+    var n_cart = JSON.stringify(sel_cart);
     var n_totalNum = String(this.data.totalNum);
-    var totalPrice = String(this.data.totalPrice);
+    var n_totalPrice = String(this.data.totalPrice);
     wx.navigateTo({
-      url: '/pages/order_submit/order_submit?address=' + n_address + '&cart=' + cart + '&totalNum=' + n_totalNum + '&totalPrice=' + totalPrice
+      url: '/pages/order_submit/order_submit?cart=' + n_cart + '&totalNum=' + n_totalNum + '&totalPrice=' + n_totalPrice
     })
   },
   //获取地址按钮事件

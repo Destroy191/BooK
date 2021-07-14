@@ -1,9 +1,6 @@
 // pages/address_sel/address_sel.js
 const app = getApp()
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     list:[],//存储获取的用户地址信息
     openid:null,
@@ -15,9 +12,6 @@ Page({
       openid:app.globalData.openid,
     })
   },
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
     //在数据库获取用户的地址信息和默认地址信息
       let that = this
@@ -43,7 +37,7 @@ Page({
           console.log("请求失败", res)
         }
       })
-    },
+  },
   defaultFun:function(data){
     //将目前为true的改为false，将item.default改为true
     let that = this
@@ -51,6 +45,7 @@ Page({
     var db = wx.cloud.database()
     var  _ = db.command
     db.collection("address").where({
+      _openid:that.data.openid,
       default:true
     }).get({
       success:(res)=>{
@@ -62,6 +57,7 @@ Page({
       }
     })
     db.collection("address").where({
+      _openid:that.data.openid,
       id:data.currentTarget.dataset.item.id
     }).get({
       success:(res)=>{
@@ -76,35 +72,43 @@ Page({
       id : data.currentTarget.dataset.item.id
     })
   },
-
   delfun:function(data){
-    let that = this
-    wx.cloud.init()
-    var db = wx.cloud.database()
-    var  _ = db.command
-    db.collection("address").where({
-      id:data.currentTarget.dataset.item.id
-    }).get({
-      success:(res)=>{
-        db.collection("address").doc(res.data[0]._id).remove({
-          success: function(res) {
-            console.log(res.data)
-            that.onShow()
-          }
-        })
+    wx.showModal({
+      title: '删除地址',
+      content: '是否删除该地址',
+      success :(res)=>{
+        if (res.confirm) {
+          let that = this
+          wx.cloud.init()
+          var db = wx.cloud.database()
+          var  _ = db.command
+          db.collection("address").where({
+            _openid:that.data.openid,
+            id:data.currentTarget.dataset.item.id
+          }).get({
+            success:(res)=>{
+              db.collection("address").doc(res.data[0]._id).remove({
+                success: function(res) {
+                  console.log(res.data)
+                  that.onShow()
+                }
+              })
+            }
+          })
+        } else if (res.cancel) {
+
+        }
       }
     })
   },
   submitAddressChoice:function(data){
-    var pages = getCurrentPages();
-    var prevPage = pages[pages.length - 2];  //上一个页面
-    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-    prevPage.setData({
-      address: {region: this.data.list[this.data.id - 1].city, detailed: this.data.list[this.data.id - 1].detailed, mobile: this.data.list[this.data.id - 1].mobile, name: this.data.list[this.data.id - 1].name, address_id: this.data.list[this.data.id - 1].id}
-    })
     wx.navigateBack({
       delta: 1,
     })
   },
-  
+  addAddressChoice:function(data){
+    wx.navigateTo({
+      url: '/pages/address_add/address_add?number={{list[list.length-1].id}}',
+    })
+  }
 })

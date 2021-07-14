@@ -83,9 +83,9 @@ page {
   align-items: center;
 }
 .footer_tool .total_price_wrap {
-  flex: 3;
+  flex: 7;
   padding-right: 15rpx;
-  text-align: right;
+  text-align: center;
 }
 .footer_tool .total_price_wrap .total_price .total_price_text {
   color: #ff5f19;
