@@ -1,0 +1,35 @@
+<!--pages/address_sel/address_sel.wxml-->
+<view style='height:100vh;'>
+<scroll-view scroll-y style='height:92vh;'>
+  <view class='list'>
+    <view class='item' wx:for="{{list}}" >
+      <view class='left'>
+        <view>{{item.mobile}} {{item.name}} 收</view>
+        <view>{{item.city[0]}} {{item.city[1]}} {{item.city[2]}} {{item.detailed}}</view>
+      </view>
+      <view class='del' bindtap='delfun' data-item="{{item}}">
+        <image src='/images/del.png'></image>
+      </view>
+      <navigator  hover-class="none" url="/pages/address_add/address_add?city={{item.city[0]}},{{item.city[1]}},{{item.city[2]}}&mobile={{item.mobile}}&name={{item.name}}&detailed={{item.detailed}}&id={{item.id}}&number={{list[list.length-1].id}}"  class='edit'>
+        <image src='/images/edit.png'></image>
+      </navigator>
+      <view class='choice' wx:if="{{id != item.id}}" bindtap='defaultFun' data-item="{{item}}">
+        <image src='/images/choice_n.png'></image>
+      </view>
+       <view class='choice' wx:else>
+        <image src='/images/choice_y.png'></image>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<view class="choice_btn">
+  <view class='add_btn' bindtap="addAddressChoice">
+    新增收货地址
+  </view>
+  <view class='submit_btn' bindtap="submitAddressChoice">
+    确定收货地址
+  </view>
+</view>
+
+</view>
+

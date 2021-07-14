@@ -1,0 +1,67 @@
+<!--home/home.wxml-->
+<!--index.wxml-->
+<view>
+     <view>
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+            <!-- 搜索框 -->
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" value="{{name}}" class="weui-search-bar__input" bindinput="SearchInput" placeholder="请输入搜索内容"/>
+                </view>
+            </view>
+            <!-- 搜索按钮,调用搜索查询方法 -->
+            <view class="weui-search-bar__cancel-btn" bindtap='Searchfun'>搜索</view>
+        </view>
+    </view>
+</view>
+<view class='imagesize'>
+  <swiper 
+    indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" 
+    interval="{{interval}}" 
+    duration="{{duration}}"
+    >
+      <block wx:for="{{list4}}">
+        <swiper-item>
+          <navigator url="/pages/book_detail/book_detail?id={{item._id}}" hover-class="none" >
+            <image src='{{item.picture}}' class="slide-image" style='width:100%;height:220px;' />
+          </navigator>
+        </swiper-item>
+      </block>
+  </swiper>
+</view>
+<view class='icon'>
+    <navigator url="/pages/book_list/book_list?type=教育" hover-class="none" >
+      <image src='/images/education.jpg' mode="aspectFit"></image>
+      <text>教育</text>
+    </navigator>
+    <navigator url="/pages/book_list/book_list?type=文学" hover-class="none" >
+      <image src='/images/literature.jpg' mode="aspectFit"></image>
+      <text>文学</text>
+    </navigator>
+    <navigator url="/pages/book_list/book_list?type=少儿" hover-class="none" >
+      <image src='/images/child.jpg' mode="aspectFit"></image>
+      <text>少儿</text>
+    </navigator>
+    <navigator url="/pages/book_list/book_list?type=人文" hover-class="none" >
+      <image src='/images/encouragement.jpg' mode="aspectFit"></image>
+      <text>人文</text>
+    </navigator>
+    <navigator url="/pages/book_list/book_list?type=经管" hover-class="none" >
+      <image src='/images/society.jpg' mode="aspectFit"></image>
+      <text>经管</text>
+    </navigator>
+  </view>
+  <view class='list'>
+    <view class='home' wx:for="{{list}}" >
+      <view>
+        <navigator url="/pages/book_detail/book_detail?id={{item._id}}&name={{item.name}}&picture={{item.picture}}&price={{item.price}}" hover-class="none" >
+          <image src="{{item.picture}}" mode="aspectFit"></image>
+          <view><text>{{item.name}}</text></view>
+          <view class="show">¥{{item.price}}</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+<!-- <button bindtap='imgsc'> 上传</button> -->

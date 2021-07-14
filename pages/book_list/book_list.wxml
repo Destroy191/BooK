@@ -1,0 +1,12 @@
+<!--pages/book_list/book_list.wxml-->
+<view class='list'>
+  <view class='home' wx:for="{{list}}" >
+    <view>
+      <navigator url="/pages/book_detail/book_detail?id={{item._id}}&name={{item.name}}&picture={{item.picture}}&price={{item.price}}" hover-class="none" >
+        <image src="{{item.picture}}" mode="aspectFit"></image>
+        <view><text>{{item.name}}</text></view>
+        <view class="show">¥{{item.price}}</view>
+      </navigator>
+    </view>
+  </view>
+</view>
