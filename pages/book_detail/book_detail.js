@@ -133,10 +133,10 @@ Page({
       return;
     }
     let cart = [{_id: "0", _openid: app.globalData.openid, book_id: this.data.id, book_name: this.data.name, book_picture: this.data.picture, book_price: this.data.price, checked: false, number: 1}];
-    var n_cart = JSON.stringify(cart);
-    let totalNum = this.data.number;
-    let totalPrice = this.data.price;
     console.log(cart)
+    var n_cart = JSON.stringify(cart);
+    let totalNum = 1;
+    let totalPrice = this.data.price;
     wx.navigateTo({
       url: '/pages/order_submit/order_submit?cart=' + n_cart + '&totalNum=' + totalNum + '&totalPrice=' + totalPrice,
       success: () => {

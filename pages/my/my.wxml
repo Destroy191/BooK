@@ -19,17 +19,13 @@
   <view class='icon'>
     <navigator url="/pages/order/order?type=1" hover-class="none" >
       <image src='/images/pending_payment.png' mode="aspectFit"></image>
-      <text>代付款</text>
+      <text>待付款</text>
     </navigator>
     <navigator url="/pages/order/order?type=2" hover-class="none" >
-      <image src='/images/pending_delivery.png' mode="aspectFit"></image>
-      <text>代发货</text>
-    </navigator>
-    <navigator url="/pages/order/order?type=3" hover-class="none" >
       <image src='/images/already_shipped.png' mode="aspectFit"></image>
       <text>已发货</text>
     </navigator>
-    <navigator url="/pages/order/order?type=4" hover-class="none" >
+    <navigator url="/pages/order/order?type=3" hover-class="none" >
       <image src='/images/completed.png' mode="aspectFit"></image>
       <text>已完成</text>
     </navigator>
