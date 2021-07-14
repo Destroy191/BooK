@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/my/my",
+    "pages/order/order",
+    "pages/home/home",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/message/message",
+    "pages/cart/cart",
+    "pages/serv/service",
+    "pages/person_info/person_info",
+    "pages/my_book_eval/my_book_eval",
+    "pages/book_detail/book_detail",
+    "pages/book_define/book_define",
+    "pages/book_list/book_list",
+    "pages/address_add/address_add",
+    "pages/address_edit/address_edit",
+    "pages/book_del/book_del",
+    "pages/order_submit/order_submit"
+
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "color": "#333",
+    "selectedColor": "#ff5f19",
+    "list": [
+      {
+        "selectedIconPath": "images/home_page_n.png",
+        "iconPath": "images/home_page_y.png",
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "images/Shopping.png",
+        "iconPath": "images/shopping_select.png",
+        "pagePath": "pages/cart/cart",
+        "text": "购物车"
+      },
+      {
+        "selectedIconPath": "images/my_y.png",
+        "iconPath": "images/my_n.png",
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
