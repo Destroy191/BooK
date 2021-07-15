@@ -94,7 +94,7 @@ Page({
               book_name: that.data.name,
               book_picture: that.data.picture,
               book_price: that.data.price,
-              checked: false,
+              checked: true,
               number: 1
             }
           })
