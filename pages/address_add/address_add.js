@@ -90,10 +90,12 @@ Page({
     }
   },
   onLoad: function (options) {
+    console.log("options", options);
     this.setData({
       number: Number(options.number)+1,
       openid: app.globalData.openid
     })
+    console.log("number", this.data.number);
     if (options.id){
       this.setData({
           region: options.city.split(','),

@@ -3,7 +3,7 @@ const app = getApp()
 Page({data: {
     list:[],//存储获取的用户地址信息
     openid:'',
-    id:'',
+    id:0,
     state:null
   },
   defaultFun:function(data){
@@ -108,5 +108,22 @@ Page({data: {
           console.log("请求失败", res)
         }
       })
+  },
+  addAddressChoice:function(data){
+    //console.log("shen",this.data.list[this.data.list.length-1].id)
+    let long = this.data.list.length;
+    let index = long - 1;
+    let num = 0;
+    if(long === 0){
+      num = 0;
+    }
+    else{
+      num = this.data.list[index].id;
+    }
+    console.log("shen",num);
+    var n_number = String(num);
+    wx.navigateTo({
+      url: '/pages/address_add/address_add?number=' + n_number,
+    })
   }
 })

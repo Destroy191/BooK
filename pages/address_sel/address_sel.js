@@ -4,7 +4,7 @@ Page({
   data: {
     list:[],//存储获取的用户地址信息
     openid:null,
-    id:null,
+    id: 0,
     state:null
   },
   onLoad: function (options) {
@@ -115,8 +115,20 @@ Page({
     })
   },
   addAddressChoice:function(data){
+    //console.log("shen",this.data.list[this.data.list.length-1].id)
+    let long = this.data.list.length;
+    let index = long - 1;
+    let num = 0;
+    if(long === 0){
+      num = 0;
+    }
+    else{
+      num = this.data.list[index].id;
+    }
+    console.log("shen",num);
+    var n_number = String(num);
     wx.navigateTo({
-      url: '/pages/address_add/address_add?number={{list[list.length-1].id}}',
+      url: '/pages/address_add/address_add?number=' + n_number,
     })
   }
 })

@@ -22,7 +22,12 @@
     </view>
   </view>
 </scroll-view>
-<navigator url="/pages/address_add/address_add?number={{list[list.length-1].id}}" class='btn'>
+<!-- <navigator url="/pages/address_add/address_add?number={{list[list.length-1].id}}" class='btn'>
 新增收货地址
-</navigator>
+</navigator> -->
+<view class="btn">
+  <view class='add_btn' bindtap="addAddressChoice">
+    新增收货地址
+  </view>
+</view>
 </view>
